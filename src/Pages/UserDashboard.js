@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { API_URL } from "../config.js";
 
 
 
@@ -14,7 +15,7 @@ function UserDashboard() {
  useEffect(() => {
   const fetchOrders = async () => {
     try {
-      const response = await fetch("http://localhost:5000/admin/orders", {
+      const response = await fetch(`${API_URL}/admin/orders`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -47,7 +48,7 @@ function UserDashboard() {
     formData.append("test", test);
 
     try {
-      const response = await fetch("http://localhost:5000/api/bookOrder", {
+      const response = await fetch(`${API_URL}/api/bookOrder`, {
         method: "POST",
         headers: {
             
@@ -134,7 +135,7 @@ function UserDashboard() {
                   <td className="p-2">{order.test}</td>
                   <td className="p-2">
                     <a
-                      href={`http://localhost:5000/uploads/${order.prescriptionPath}`}
+                      href={`${API_URL}/uploads/${order.prescriptionPath}`}
                       target="_blank"
                       rel="noreferrer"
                       className="text-blue-500 underline"
