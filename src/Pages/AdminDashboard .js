@@ -1,5 +1,6 @@
 
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../config";
 
@@ -7,7 +8,7 @@ import { API_URL } from "../config";
 
 function AdminOrders() {
   const [orders, setOrders] = useState([]);
-
+    const navigate = useNavigate();
    const fetchOrders = async () => {
     try {
       const res = await axios.get(`${API_URL}/admin/orders`);
@@ -30,9 +31,23 @@ function AdminOrders() {
       console.error("Error updating status:", err);
     }
   };
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // Clear auth token
+    localStorage.removeItem("userRole"); // Optional if stored
+    navigate("/"); // Redirect to homepage
+  };
 
   return (
     <div className="p-6">
+
+       <div className="flex justify-end mb-2">
+        <button
+          onClick={handleLogout}
+          className="absolute top-4 right-4 bg-blue-500 hover:bg-blue-950 text-white px-3 py-1 rounded"
+        >
+          Logout
+        </button>
+      </div>
       <h2 className="text-2xl font-semibold mb-4">All Orders</h2>
       <table className="w-full border border-gray-300 text-left">
         <thead>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { API_URL } from "../config.js";
 
 
@@ -6,6 +7,7 @@ import { API_URL } from "../config.js";
 function UserDashboard() {
   const user = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
   const [file, setFile] = useState(null);
   const [test, setTest] = useState("");
@@ -74,8 +76,24 @@ function UserDashboard() {
     }
   };
 
+   const handleLogout = () => {
+    localStorage.removeItem("token"); // Clear auth token
+    localStorage.removeItem("userRole"); // Optional if stored
+    navigate("/"); // Redirect to homepage
+  };
+
   return (
     <div className="p-6 max-w-xl mx-auto mt-10 bg-white rounded shadow">
+
+      
+       <div className="flex justify-end mb-2">
+        <button
+          onClick={handleLogout}
+          className="absolute top-4 right-4 bg-blue-500 hover:bg-blue-950 text-white px-3 py-1 rounded"
+        >
+          Logout
+        </button>
+      </div>
         <h2 className="text-3xl font-bold text-blue-950 mb-4 text-center"> Diagnostic test booking</h2>
       <h2 className="text-xl font-bold text-blue-800 mb-4">Welcome, {user.name} </h2>
 
